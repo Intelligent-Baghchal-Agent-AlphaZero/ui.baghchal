@@ -5,11 +5,13 @@ import { Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 import { SoundToggler } from "../components/shared/soundToggler";
 import { useSound } from "@/context/SoundContext";
+import { useNotification } from "@/context/NotificationContext";
 
 export default function GameOptions() {
   const [step, setStep] = useState("home");
   const [username, setUsername] = useState<string | null>("");
   const { playClick } = useSound();
+  const { notifications } = useNotification();
 
   useEffect(() => {
     const user = localStorage.getItem("username");
@@ -42,6 +44,15 @@ export default function GameOptions() {
         </button>
       )}
 
+      {notifications &&
+        notifications.map((notification) => (
+          <Link href={notification.invitee_link}>
+            <div className="text-white absolute top-5 right-0 p-4 border rounded-full bg-orange-400 text-xl font-semibold">
+              {notification.inviter} is challenging you!
+            </div>
+          </Link>
+        ))}
+
       <div className="flex flex-col items-center justify-center space-y-1 mb-20">
         {step === "home" && (
           <>
@@ -72,7 +83,6 @@ export default function GameOptions() {
               onClick={() => setStep("computer")}
             >
               Play vs Bot
-
             </button>
           </>
         )}
@@ -83,7 +93,6 @@ export default function GameOptions() {
               <button className="w-[20rem] h-[8rem] text-black text-[2rem] text-2xl p-3 rounded-full active:scale-90 transition-all bg-[url(/wooden.png)] bg-center bg-cover hover:translate-y-2 font-[900]">
                 Same Device
               </button>
-
             </Link>
             <button className="w-[20rem] h-[8rem] text-black text-[2rem] text-2xl p-3 rounded-full active:scale-90 transition-all bg-[url(/wooden.png)] bg-center bg-cover hover:translate-y-2 font-[900]">
               Friend
@@ -102,7 +111,6 @@ export default function GameOptions() {
               <button className="w-[20rem] h-[8rem] text-black text-[2rem] text-2xl p-3 rounded-full active:scale-90 transition-all bg-[url(/wooden.png)] bg-center bg-cover hover:translate-y-2 font-[900]">
                 Goat Bot
               </button>
-
             </Link>
           </>
         )}

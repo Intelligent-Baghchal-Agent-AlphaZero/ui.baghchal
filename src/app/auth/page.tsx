@@ -23,7 +23,11 @@ export default function AuthPage() {
         password,
       });
       const user = response.data.user.username;
+      const id = response.data.user.id;
+      const rating = response.data.user.rating;
       localStorage.setItem("username", user);
+      localStorage.setItem("userId", id);
+      localStorage.setItem("rating", rating);
       router.push("/");
     } catch (error) {
       console.error("Error logging user, please try again!", error);

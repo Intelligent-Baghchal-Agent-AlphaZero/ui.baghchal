@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SoundProvider } from "@/context/SoundContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SoundProvider>{children}</SoundProvider>
+        <SoundProvider>
+          <NotificationProvider>{children}</NotificationProvider>
+        </SoundProvider>
         <Toaster />
       </body>
     </html>
